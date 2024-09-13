@@ -7,7 +7,7 @@ Date: September 12th 2024
 This script generates a game where the user can guess the name of the states.
 A map is shown and the user will type as many states they remember.
 If the state is in the list, the name will appear in the state's location in the map.
-The user can exit typing 'Exit', and the game will create a file saying the missing states!
+The user can exit typing 'Exit', and the game will create a file with the missing states!
 """
 
 import turtle
@@ -47,21 +47,16 @@ while len(guessed_states) < 50:
     if answer_state == "Exit":
 
         # New list with the states to learn
-        states_to_learn = []
-
-        # Simple loop to get every state to see if the user has guessed it
-        for state in list_of_states:
-
-            # If they have not, the state is appended to the list
-            if state not in guessed_states:
-
-                states_to_learn.append(state)
+        states_to_learn = [state for state in list_of_states if state not in guessed_states]
 
         # Convert the list to a DataFrame
         new_csv = pandas.DataFrame(states_to_learn)
 
         # Create new file
         new_csv.to_csv("StatesToLearn.csv")
+
+        # Close game
+        break
 
     # If the answer is in the list of states, then executes the code
     if answer_state in list_of_states:
